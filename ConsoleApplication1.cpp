@@ -20,7 +20,7 @@ int main() {
     
     Graph g(row, col);
     
-    g.obstacle(3);
+    g.obstacle(row);
     std::cout << "BAŞLANGIÇ (0, 0):" << std::endl;
     g.DFS(0, 0);
    

@@ -2,6 +2,8 @@
 #include <vector>
 #include "graph.h"
 #include <random>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 Graph::Graph(int rows, int cols) {
@@ -12,22 +14,24 @@ Graph::Graph(int rows, int cols) {
     visited.resize(rows, std::vector<bool>(cols, false));
 }
 
-void Graph::obstacle(int obstaclenum) {
+void Graph::obstacle(int numobstacle) {
     
 
      // Rastgele sayý üreteci 
     std::random_device rd;
     std::mt19937 generator(rd());
-    std::uniform_int_distribution<int> distribution(0, 3);
-    for (int i = 0; i < 4; i++) {
+    std::uniform_int_distribution<int> distribution(0, (numRows-1));
+    for (int i = 0; i < numobstacle; i++) {
         // Ýki rastgele sayý 
         int rowobstacle = distribution(generator);
         int colobstacle = distribution(generator);
 
         //RANDOM ENGEL YERLEÞTÝRME
-        if (rowobstacle != 0 || colobstacle != 0) {
-            visited[rowobstacle][colobstacle] = true;
-            cout << "ENGEL:" << "(" << rowobstacle << ", " << colobstacle << ")" << endl;
+        if (rowobstacle != 0 || colobstacle != 0 ) {
+            if (rowobstacle != frow || colobstacle != fcol) {
+                visited[rowobstacle][colobstacle] = true;
+                cout << "ENGEL:" << "(" << rowobstacle << ", " << colobstacle << ")" << endl;
+            }
         }
         else {
             int rowobstacle1 = distribution(generator);
@@ -35,6 +39,7 @@ void Graph::obstacle(int obstaclenum) {
             visited[rowobstacle1][colobstacle1] = true;
             cout << "ENGEL:" << "(" << rowobstacle1 << ", " << colobstacle1 << ")" << endl;
         }
+        
     }
    
 
@@ -45,10 +50,13 @@ void Graph::DFS(int row, int col) {
 
 
 
-        
-        visited[row][col] = true;
+   
+    visited[row][col] = true;
+    currentRow = row; // Þu anki satýrý güncelle
+    currentCol = col; // Þu anki sütunu güncelle
         
         std::cout << "(" << row << ", " << col << ")" << endl;
+
 
 
 
@@ -58,15 +66,20 @@ void Graph::DFS(int row, int col) {
 
         for (int dir = 0; dir < 8; ++dir) {
 
-
+           
             int newRow = row + dr[dir];
             int newCol = col + dc[dir];
+            //BÝTÝÞ NOKTASINA GELÝNCE BÝTÝR
+            if (currentRow == frow && currentCol == fcol) {
+                break;
+            }
+
+            if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols && !visited[newRow][newCol]) {
+
+                DFS(newRow, newCol);
+            }
 
 
-                if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols && !visited[newRow][newCol]) {
-
-                    DFS(newRow, newCol);
-                }
 
             
         }
