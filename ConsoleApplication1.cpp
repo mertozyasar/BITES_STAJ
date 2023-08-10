@@ -10,19 +10,24 @@ int main() {
 
     setlocale(LC_ALL, "Turkish");
     int row,col;
-    cout << "satır sayısını giriniz:";
-    cin >> row;
-    cout << "sütün sayısını sayısını giriniz:";
-    cin >> col;
+    do {
+        cout << "satır sayısını giriniz:";
+        cin >> row;
+        cout << "sütün sayısını sayısını giriniz:";
+        cin >> col;
+    } while (row <= 1 && col <=1);
+    
+    
 
-
+    std::cout << "BAŞLANGIÇ (0, 0):" << std::endl;
   
     
     Graph g(row, col);
-    
+    g.finish();
     g.obstacle(row);
-    std::cout << "BAŞLANGIÇ (0, 0):" << std::endl;
+    std::cout << "GİDİLEN YOL:" << endl;
     g.DFS(0, 0);
+    
    
     
 

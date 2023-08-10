@@ -8,6 +8,8 @@
 using namespace std;
 Graph::Graph(int rows, int cols) {
 
+
+
     numRows = rows;
     numCols = cols;
     grid.resize(rows, std::vector<int>(cols, 0));
@@ -28,6 +30,7 @@ void Graph::obstacle(int numobstacle) {
 
         //RANDOM ENGEL YERLEÞTÝRME
         if (rowobstacle != 0 || colobstacle != 0 ) {
+            //BÝTÝÞ ÝLE ENGEL ÇAKIÞMASIN
             if (rowobstacle != frow || colobstacle != fcol) {
                 visited[rowobstacle][colobstacle] = true;
                 cout << "ENGEL:" << "(" << rowobstacle << ", " << colobstacle << ")" << endl;
@@ -44,25 +47,37 @@ void Graph::obstacle(int numobstacle) {
    
 
 }
+void Graph::finish() {
+    // Rastgele sayý üreteci 
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_int_distribution<int> distribution(1, (numRows-1));
+    
+        // BÝtiþ için iki rastgele sayý üret. 
+        frow = distribution(generator);
+        fcol = distribution(generator);
+        //BÝTÝÞ NOKTASINI YAZDIR
+        cout << "BÝTÝÞ:" << "(" << frow << "," << fcol << ")" << endl;
+    
+
+
+}
 
 void Graph::DFS(int row, int col) {
-
-
 
 
    
     visited[row][col] = true;
     currentRow = row; // Þu anki satýrý güncelle
     currentCol = col; // Þu anki sütunu güncelle
-        
+
         std::cout << "(" << row << ", " << col << ")" << endl;
-
-
-
 
         //çapraz komþularýda kontrol et
         static int dr[] = { 1,1,0,-1,-1,-1,0,1 };
         static int dc[] = { 0, 1,1,1,0,-1,-1,-1 };
+
+
 
         for (int dir = 0; dir < 8; ++dir) {
 
