@@ -1,5 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <list>
+#include <chrono>
+#include <thread>
+#include <queue>
+#include <cmath>
+#include <sstream> 
+
 
 
 class Graph {
@@ -11,14 +18,18 @@ private:
     int frow, fcol;
     int currentRow; 
     int currentCol; 
-    int row,col;
+    double tentative_g_cost;
+    double heuristic(int row, int col);
+    std::vector<std::pair<int, int>> path; // Geçilen yolu saklamak için
     
     
 
-public:
+public: 
+    Graph(int rows, int cols);
+    void AStar();
     void finish();
     void obstacle(int numobstacle);
-    Graph(int rows, int cols);
     void DFS(int row, int col);
+    void BFS();
     
 };
