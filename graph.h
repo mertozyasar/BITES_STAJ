@@ -22,7 +22,7 @@ private:
     double heuristic(int row, int col);
     std::vector<std::pair<int, int>> path; // Geçilen yolu saklamak için
     
-    
+    bool found = false;//hedefe ulaþýnca true yap.
 
 public: 
     Graph(int rows, int cols);
@@ -30,6 +30,6 @@ public:
     void finish();
     void obstacle(int numobstacle);
     void DFS(int row, int col);
-    void BFS();
+    void BFS(int row, int col);
     
 };

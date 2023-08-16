@@ -2,7 +2,6 @@
 #include <vector>
 #include "graph.h"
 #include <random>
-
 #include <thread>
 
 using namespace std;
@@ -173,10 +172,46 @@ void Graph::AStar() {
 
 
 
-void Graph::BFS(){
+void Graph::BFS(int srow ,int scol){
+    struct node {
+        int x;
+        int y;
+    };
 
 
+    // 8 yöne hareket için 
+    static int dr[] = { -1, -1, -1, 0, 1, 1, 1, 0 };
+    static int dc[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+    std::cout << "(" << srow << ", " << scol << ")" << std::endl;
+    queue<node> q;
+    q.push({srow,scol });
+    visited[srow][scol] = true;
+
+    while (!q.empty()) {
+        int x = q.front().x;
+        int y = q.front().y;
+        q.pop();
+
+        for (int dir = 0; dir < 8; ++dir) {
+            int newRow = x + dr[dir];
+            int newCol = y + dc[dir];
+            if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols && !visited[newRow][newCol]) {
+
+                visited[newRow][newCol] = true;
+                q.push({ newRow,newCol });
+                std::cout << "(" << newRow << ", " << newCol << ")" << std::endl;
+            }
+
+            if (newRow == frow && newCol == fcol) {
+                break; break; 
+            }
 
 
+        }
 
+    }
+    std::cout << "(" << frow << ", " << fcol << ")" << std::endl;
 }
+
+
