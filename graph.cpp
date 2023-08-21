@@ -19,7 +19,7 @@ void Graph::obstacle(int numobstacle) {
     
     
     //Random engel yerleþtirme
-    /*
+    
         // Rastgele sayý üreteci 
         std::random_device rd;
         std::mt19937 generator(rd());
@@ -45,17 +45,18 @@ void Graph::obstacle(int numobstacle) {
                 cout << "ENGEL:" << "(" << rowobstacle1 << ", " << colobstacle1 << ")" << endl;
             }
 
-        }*/
+        }
+    /*
     visited[1][1] = true;
     visited[1][2] = true;
     visited[2][1] = true;
     visited[3][1] = true;
-    visited[4][1] = true;
+    visited[4][1] = true;*/
     
 }
 void Graph::finish() {
     //Rastgele bitiþ veriyor.
-    /*
+    
     // Rastgele sayý üreteci 
     std::random_device rd;
     std::mt19937 generator(rd());
@@ -65,9 +66,10 @@ void Graph::finish() {
         frow = distribution(generator);
         fcol = distribution1(generator);
         //BÝTÝÞ NOKTASINI YAZDIR
-        cout << "BÝTÝÞ:" << "(" << frow << "," << fcol << ")" << endl;*/
+        cout << "BÝTÝÞ:" << "(" << frow << "," << fcol << ")" << endl;
+    /*
     frow = 3, fcol = 3;
-    cout << "BÝTÝÞ:" << "(" << frow << "," << fcol << ")" << endl;
+    cout << "BÝTÝÞ:" << "(" << frow << "," << fcol << ")" << endl;*/
 
 
 }
@@ -104,6 +106,65 @@ void Graph::DFS(int row, int col) {
     path.pop_back(); // Geçilen yoldan çýkar
     
 }
+
+
+
+
+void Graph::BFS(int srow, int scol) {
+    struct node {
+        int x;
+        int y;
+    };
+    vector<vector<pair<int, int>>> came_from1(numCols, vector<pair<int, int>>(numRows, make_pair(-1, -1)));
+
+    // 8 yöne hareket için 
+    static int dr1[] = { -1, -1, -1, 0, 1, 1, 1, 0 };
+    static int dc1[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
+
+    queue<node> q;
+    q.push({ srow, scol });
+    visited[srow][scol] = true;
+    vector<pair<int, int>> reverse_path;
+
+    while (!q.empty()) {
+        int x = q.front().x;
+        int y = q.front().y;
+        q.pop();
+     
+        
+        for (int dir1 = 0; dir1 < 8; ++dir1) {
+            int newrow = x + dr1[dir1];
+            int newcol = y + dc1[dir1];
+            if (newrow >= 0 && newrow < numRows && newcol >= 0 && newcol < numCols && !visited[newrow][newcol]) {
+                came_from1[newrow][newcol] = make_pair(x, y);
+                visited[newrow][newcol] = true;
+                q.push({ newrow, newcol });
+            }
+
+            if (newrow == frow && newcol == fcol) {
+                // Hedefe ulaþýldýðýnda yolu takip et
+                int currRow = frow;
+                int currCol = fcol;
+                while (currRow != srow || currCol != scol) {
+                     reverse_path.push_back(make_pair(currRow, currCol));
+                    pair<int, int> parent1 = came_from1[currRow][currCol];
+                    currRow = parent1.first;
+                    currCol = parent1.second;
+                }
+                reverse_path.push_back(make_pair(srow, scol));
+
+                // Yolu tersten yazdýr
+                for (int i = reverse_path.size() - 1; i >= 0; --i) {
+                    cout << "(" << reverse_path[i].first << ", " << reverse_path[i].second << ")" << endl;
+                }
+
+                return; // Döngüyü sonlandýr
+            }
+        }
+    }
+    cout << "Hedefe ulaþýlamadý!" << endl;
+}
+
 
 
 void Graph::AStar() {
@@ -172,46 +233,6 @@ void Graph::AStar() {
 
 
 
-void Graph::BFS(int srow ,int scol){
-    struct node {
-        int x;
-        int y;
-    };
 
-
-    // 8 yöne hareket için 
-    static int dr[] = { -1, -1, -1, 0, 1, 1, 1, 0 };
-    static int dc[] = { -1, 0, 1, 1, 1, 0, -1, -1 };
-
-    std::cout << "(" << srow << ", " << scol << ")" << std::endl;
-    queue<node> q;
-    q.push({srow,scol });
-    visited[srow][scol] = true;
-
-    while (!q.empty()) {
-        int x = q.front().x;
-        int y = q.front().y;
-        q.pop();
-
-        for (int dir = 0; dir < 8; ++dir) {
-            int newRow = x + dr[dir];
-            int newCol = y + dc[dir];
-            if (newRow >= 0 && newRow < numRows && newCol >= 0 && newCol < numCols && !visited[newRow][newCol]) {
-
-                visited[newRow][newCol] = true;
-                q.push({ newRow,newCol });
-                std::cout << "(" << newRow << ", " << newCol << ")" << std::endl;
-            }
-
-            if (newRow == frow && newCol == fcol) {
-                break; break; 
-            }
-
-
-        }
-
-    }
-    std::cout << "(" << frow << ", " << fcol << ")" << std::endl;
-}
 
 

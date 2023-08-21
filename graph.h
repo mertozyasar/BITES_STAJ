@@ -21,6 +21,7 @@ private:
     double tentative_g_cost;
     double heuristic(int row, int col);
     std::vector<std::pair<int, int>> path; // Geçilen yolu saklamak için
+   
     
     bool found = false;//hedefe ulaþýnca true yap.
 
@@ -31,5 +32,6 @@ public:
     void obstacle(int numobstacle);
     void DFS(int row, int col);
     void BFS(int row, int col);
+   
     
 };
