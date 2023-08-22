@@ -21,10 +21,22 @@
     <ClCompile Include="graph.cpp">
       <Filter>Kaynak Dosyalar</Filter>
     </ClCompile>
+    <ClCompile Include="grid.cpp">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graph.h">
       <Filter>Kaynak Dosyalar</Filter>
     </ClInclude>
+    <ClInclude Include="grid.h">
+      <Filter>Kaynak Dosyalar</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libraries\lib\glfw3.lib" />
   </ItemGroup>
 </Project>

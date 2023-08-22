@@ -20,7 +20,7 @@ void Graph::obstacle(int numobstacle) {
     
     //Random engel yerleþtirme
     
-        // Rastgele sayý üreteci 
+     /*   // Rastgele sayý üreteci 
         std::random_device rd;
         std::mt19937 generator(rd());
         std::uniform_int_distribution<int> distribution(0, (numRows - 1));
@@ -45,13 +45,13 @@ void Graph::obstacle(int numobstacle) {
                 cout << "ENGEL:" << "(" << rowobstacle1 << ", " << colobstacle1 << ")" << endl;
             }
 
-        }
-    /*
+        }*/
+    
     visited[1][1] = true;
     visited[1][2] = true;
     visited[2][1] = true;
     visited[3][1] = true;
-    visited[4][1] = true;*/
+    visited[4][1] = true;
     
 }
 void Graph::finish() {
