@@ -7,30 +7,16 @@
 #include <GLFW/glfw3.h>
 #include "grid.h"
 
+
 using namespace std;
 
-int main() {
+int main(int argc,char **argv) {
     
     setlocale(LC_ALL, "Turkish");
-    Grid grid(900,600);
-    if (grid.getwindow() == NULL) {
-        std::cout << "FAİLED TO CREATE  WİNDOW" << std::endl;
-        return -1;
-    }
-    grid.createwindow();
-
-
-    // Main while loop
-    while (!glfwWindowShouldClose(grid.getwindow()))
-    {
-        // Take care of all GLFW events
-        glfwPollEvents();
-    }
-    // Delete window before ending the program
-    glfwDestroyWindow(grid.getwindow());
-    // Terminate GLFW before ending the program
-    glfwTerminate();
-
+    //PENCERE AÇTI
+    glutInit(&argc, argv);
+    Grid g(500,500);
+    
 
 
     /*
