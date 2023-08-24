@@ -13,12 +13,13 @@
 class Grid {
 
 private:
-
+	int gridX=40, gridY=40;
 public:
-	
+	Grid();
 	Grid(int, int);
 	void init();
-	
+	void initGrid(int, int);
+	void unitsquare(int x, int y);
 	void drawGrid();
 
 };
