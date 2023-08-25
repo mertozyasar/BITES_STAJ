@@ -4,7 +4,7 @@
 #define COLS 40
 #define ROWS 40
 #define FBS 2.5
-
+bool visitedArray[40][40] = { {false} };
 void timer_calback(int);
 void display_calback();
 void reshabe_calback(int ,int );
@@ -23,15 +23,30 @@ void display_calback() {
 	Grid g1;
 	g1.drawGrid();
 
-	glRectd(index, indexy, index + 5, indexy + 5);
-	index = index + 5;
-	indexy = indexy + 5;
+	// Ziyaret edilen konumu iþaretle ve izle
+	visitedArray[index / 5][indexy / 5] = true;
 
-	if (index > 40 ) {
-		index = 0;
+	// Daha önce ziyaret edilen konumlarý çiz
+	glColor3f(0.0, 1.0, 0.0); 
+	for (int x = 0; x < 40; x = x + 5) {
+		for (int y = 0; y < 40; y = y + 5) {
+			if (visitedArray[x / 5][y / 5]) {
+				glRectd(x, y, x + 5, y + 5);
+			}
+		}
 	}
-	else if (indexy > 40) {
-		indexy = 0;
+
+	// Son konumu çiz
+	glRectd(index, indexy, index + 5, indexy + 5);
+
+	// Son konumu sadece bir kere çizdikten sonra ileri git
+	if (index == 40 && indexy == 40) {
+		return;
+		
+	}
+	else {
+		index = index + 5;
+		indexy = indexy + 5;
 	}
 
 	glutSwapBuffers();
@@ -81,6 +96,7 @@ void reshabe_calback(int w, int h) {
 	 glVertex2f(x + 5, y + 5);
 	 glVertex2f(x, y + 5);
 
+
 	 glEnd();
 
  }
@@ -107,6 +123,7 @@ void reshabe_calback(int w, int h) {
 
 	
  }
+
 
  Grid::Grid() {
 
