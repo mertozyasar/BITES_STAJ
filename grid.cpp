@@ -154,7 +154,7 @@ void reshabe_calback(int w, int h) {
 				 visitedArray[newRow][newCol] = true;
 				 parent1[newRow][newCol] = { x, y };
 				 q.push({ newRow,newCol });
-				Sleep(100); // 300ms uyku
+				Sleep(200); //  uyku
 			 }
 
 
@@ -212,6 +212,8 @@ void reshabe_calback(int w, int h) {
 		 // İki rastgele sayı 
 		 int rowobstacle = distribution(generator) * 5;
 		 int colobstacle = distribution1(generator) * 5;
+		 if (rowobstacle == 40) { rowobstacle = 35; }
+		 if (colobstacle == 40) { colobstacle = 35; }
 
 		 //RANDOM ENGEL YERLEŞTİRME
 		 if (rowobstacle != 0 || colobstacle != 0) {
