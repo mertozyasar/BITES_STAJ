@@ -146,7 +146,7 @@ void Graph::BFS(int srow, int scol) {
                 int currRow = frow;
                 int currCol = fcol;
                 while (currRow != srow || currCol != scol) {
-                     reverse_path.push_back(make_pair(currRow, currCol));
+                    reverse_path.push_back(make_pair(currRow, currCol));
                     pair<int, int> parent1 = came_from1[currRow][currCol];
                     currRow = parent1.first;
                     currCol = parent1.second;

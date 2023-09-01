@@ -8,6 +8,7 @@
 #include "grid.h"
 
 
+
 using namespace std;
 
 int main(int argc,char **argv) {
@@ -17,8 +18,7 @@ int main(int argc,char **argv) {
     glutInit(&argc, argv);
     Grid g(500,500);
     
-
-
+  
     /*
     int row , col ;
 
