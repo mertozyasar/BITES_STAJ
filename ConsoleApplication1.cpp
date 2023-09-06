@@ -6,6 +6,7 @@
 #include "libraries/include/glad/glad.h"
 #include <GLFW/glfw3.h>
 #include "grid.h"
+#include <thread>
 
 
 
@@ -17,6 +18,7 @@ int main(int argc,char **argv) {
     //PENCERE AÇTI
     glutInit(&argc, argv);
     Grid g(500,500);
+
     
   
     /*

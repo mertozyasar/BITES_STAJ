@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <queue>
 #include <random>
+#include <thread>
 
 
 
@@ -22,8 +23,11 @@ public:
 	void initGrid(int, int);
 	void unitsquare(int x, int y);
 	void drawGrid();
-	void bfsGrid(int, int, int, int);
+	void ÝHABFS(int, int, int, int, int, int, int, int);
 	 void obstacle(int);
+	 void ÝHA2BFS(int, int, int, int);
+	
+	 bool pathsIntersected = false;
 
 	
 
