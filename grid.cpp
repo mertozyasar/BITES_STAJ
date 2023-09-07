@@ -4,7 +4,7 @@
 
 	#define COLS 40
 	#define ROWS 40
-	#define FBS 2.5
+	#define FBS 1
 	bool visitedArray[40][40] = { {false} };
 	bool visitedArrayiha2[40][40] = { {false} };
 	void timer_calback(int);
@@ -26,7 +26,7 @@
 		glClear(GL_COLOR_BUFFER_BIT);
 		Grid g1;	
 
-		//g1.obstacle(5);
+		//g1.obstacle(20);
 		g1.drawGrid();
 	
 		g1.İHABFS(0, 0, 40, 40, 0, 40, 40, 0);
@@ -173,26 +173,26 @@
 		 visitedArray[startrowiha2][startcoliha2] = true;
 
 		//ENGEL YERLEŞTİRME
-		obstacle(8);
+		obstacle(11);
 
 		
 
 		while ( !q.empty() || !qiha2.empty()) {
-			int newColiha2, newRowiha2;
 			if (!qiha2.empty()) {
-
 				int xiha2 = qiha2.front().xiha2;
 				int yiha2 = qiha2.front().yiha2;
 				qiha2.pop();
 
 
+
+
 				for (int dir = 0; dir < 8; ++dir) {
-					  newRowiha2 = xiha2 + driha2[dir];
-					 newColiha2 = yiha2 + dciha2[dir];
+					int newRowiha2 = xiha2 + driha2[dir];
+					int newColiha2 = yiha2 + dciha2[dir];
 					int fınıshrowiha2_, fınıshcoliha2_, startrowiha2_, startcoliha2_;
 
-					drawGrid();
 
+					drawGrid();
 
 					if (fınıshrowiha2 == 40) { fınıshrowiha2_ = 35; }
 					else { fınıshrowiha2_ = fınıshrowiha2; }
@@ -207,6 +207,7 @@
 					glColor3f(0.0, 1.0, 0.0);
 					glRectd(startrowiha2_, startcoliha2_, startrowiha2_ + 5, startcoliha2_ + 5);
 
+
 					glutSwapBuffers();
 
 					if (newRowiha2 >= 0 && newRowiha2 < 40 && newColiha2 >= 0 && newColiha2 < 40 && !visitedArrayiha2[newRowiha2][newColiha2]) {
@@ -214,45 +215,44 @@
 						visitedArrayiha2[newRowiha2][newColiha2] = true;
 						parent1iha2[newRowiha2][newColiha2] = { xiha2, yiha2 };
 						qiha2.push({ newRowiha2,newColiha2 });
-					//	Sleep(130); //  uyku
+					//	Sleep(200); //  uyku
 					}
+
+
 					if (newRowiha2 == fınıshrowiha2 && newColiha2 == fınıshcoliha2) {
-						
+
 						glutSwapBuffers();
 						shortestPathiha2.push_back({ newRowiha2, newColiha2 });
 						int parentXiha2 = xiha2;
 						int parentYiha2 = yiha2;
 						shortestPathiha2.push_back({ parentXiha2, parentYiha2 });
-						
-						
-						// İkinci İHA'nın en kısa yolu
+
+						// Geriye doğru giderek en kısa yolu takip et
+						// İlk İHA'nın en kısa yolu
 						while (parentXiha2 != startrowiha2 || parentYiha2 != startcoliha2) {
 							int tempXiha2 = parentXiha2;
 							parentXiha2 = parent1iha2[tempXiha2][parentYiha2].first;
 							parentYiha2 = parent1iha2[tempXiha2][parentYiha2].second;
 							shortestPathiha2.push_back({ parentXiha2, parentYiha2 });
-							shortestPathiha2.push_back({ startrowiha2,startcoliha2 });
 						}
-						
-							for (const auto& celliha2 : shortestPathiha2) {
-								glColor3f(0.0, 0.0, 1.0); // Mavi renk
-								glRectd(celliha2.first, celliha2.second, celliha2.first + 5, celliha2.second + 5);
-							}
-							
-						
+
 						
 
+						
+						
 					}
-					
 
 					else {
+
 						glutSwapBuffers();
-						glColor3f(1.0, 0.5, 0.0);
+						glColor3f(0.8, 0.8, 1.0);
 						glRectd(xiha2, yiha2, xiha2 + 5, yiha2 + 5);
+
+
 					}
 
-				}
 
+				}
 			}
 
 			if(!q.empty()) {
@@ -292,7 +292,7 @@
 						visitedArray[newRow][newCol] = true;
 						parent1[newRow][newCol] = { x, y };
 						q.push({ newRow,newCol });
-						Sleep(200); //  uyku
+						Sleep(100); //  uyku
 					}
 
 
@@ -312,22 +312,9 @@
 							parentY = parent1[tempX][parentY].second;
 							shortestPath.push_back({ parentX, parentY });
 						}
-						
-						for (const auto& cell : shortestPath) {
-
-							glColor3f(0.8, 0.0, 1.0);
-							glRectd(cell.first, cell.second, cell.first + 5, cell.second + 5);
-						}
-						
 
 
 
-						//kare çizgileri belli olsun.
-						drawGrid();
-						glutSwapBuffers();
-						
-
-						
 
 					}
 
@@ -345,11 +332,35 @@
 			}
 
 		}
+		glutSwapBuffers();
+		for (const auto& cell : shortestPath) {
+			int xiha1_ = cell.first;
+			int yiha1_ = cell.second;
+			if (xiha1_ == 40) { xiha1_ = 35; }
+			if (yiha1_ == 40) { yiha1_ = 35; }
+			glColor3f(0.2, 0.0, 1.0);
+			glRectd(xiha1_, yiha1_, xiha1_ + 5, yiha1_ + 5);
+			
+		}
+		for (const auto& celliha2 : shortestPathiha2) {
+			int xiha2_ = celliha2.first;
+			int yiha2_ = celliha2.second;
+			if (xiha2_ == 40) { xiha2_ = 35; }
+			if (yiha2_ == 40) { yiha2_ = 35; }
+			glColor3f(0.8, 0.0, 1.0);
+			glRectd(xiha2_, yiha2_, xiha2_ + 5, yiha2_ + 5);
+			
+		}
+		obstacle(11);
+		drawGrid();
+		glutSwapBuffers();
+
 
 	 }
 
 	 void Grid::obstacle(int numobstacle) {
 		 // Rastgele sayı üreteci
+		 /*
 		 std::random_device rd;
 		 std::mt19937 generator(rd());
 		 std::uniform_int_distribution<int> distribution(0, (39 / 5));
@@ -381,7 +392,68 @@
 				 glColor3f(0.0, 1.0, 1.0);
 				 glRectd(rowobstacle1, colobstacle1, rowobstacle1 + 5, colobstacle1 + 5);
 			 }
-		 }
+		 }*/
+		 //1.ENGEL
+		 visitedArray[0][5] = true;
+		 visitedArrayiha2[0][5] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(0,5,5,10);
+		 //2.ENGEL
+		 visitedArray[5][10] = true;
+		 visitedArrayiha2[5][10] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(5, 10, 10, 15);
+		 //3.ENGEL
+		 visitedArray[0][15] = true;
+		 visitedArrayiha2[0][15] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(0, 15, 5, 20);
+		 //4.ENGEL
+		 visitedArray[10][15] = true;
+		 visitedArrayiha2[10][15] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(10, 15, 15, 20);
+		 //5.ENGEL
+		 visitedArray[15][15] = true;
+		 visitedArrayiha2[15][15] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(15, 15, 20, 20);
+		 //6.ENGEL
+		 visitedArray[20][15] = true;
+		 visitedArrayiha2[20][15] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(20, 15, 25, 20);
+		 //7.ENGEL
+		 visitedArray[10][20] = true;
+		 visitedArrayiha2[10][20] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(10, 20, 15, 25);
+		 //8.ENGEL
+		 visitedArray[10][25] = true;
+		 visitedArrayiha2[10][25] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(10, 25, 15, 30);
+		 //9.ENGEL
+		 visitedArray[5][25] = true;
+		 visitedArrayiha2[5][25] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(5, 25, 10, 30);
+		 //10.ENGEL
+		 visitedArray[30][10] = true;
+		 visitedArrayiha2[30][10] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(30, 10, 35, 15);
+		 //11.ENGEL
+		 visitedArray[35][10] = true;
+		 visitedArrayiha2[35][10] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(35, 10, 40, 15);
+		 //12.ENGEL
+		 visitedArray[35][5] = true;
+		 visitedArrayiha2[35][5] = true;
+		 glColor3f(0.0, 1.0, 1.0);
+		 glRectd(35, 5, 40, 10);
+
 
 	 }
 	 
@@ -391,104 +463,7 @@
 
 	 }
  
-	 void Grid::İHA2BFS(int startrowiha2, int startcoliha2, int fınıshrowiha2, int fınıshcoliha2) {
-		
-		 struct nodeiha2 {
-			 int xiha2;
-			 int yiha2;
-		 };
-		 std::vector<std::vector<std::pair<int, int>>> parent1iha2(ROWS, std::vector<std::pair<int, int>>(COLS, { -5, -5 }));
-		 std::vector<std::pair<int, int>> shortestPathiha2;
-		 // 8 yöne hareket için 
-		 static int dr[] = { -5, -5, -5, 0, 5, 5, 5, 0 };
-		 static int dc[] = { -5, 0, 5, 5, 5, 0, -5, -5 };
-
-
-		 
-		 glColor3f(0.0, 1.0, 0.0);
-		 glRectd(startrowiha2, startcoliha2, startrowiha2 + 5, startcoliha2 + 5);
-		 std::queue<nodeiha2> qiha2;
-		 qiha2.push({ startrowiha2,startcoliha2 });
-		 visitedArrayiha2[startrowiha2][startcoliha2] = true;
-
-		//obstacle(20);
-	
-		
-
-
-		 while (!qiha2.empty()) {
-			 int xiha2 = qiha2.front().xiha2;
-			 int yiha2 = qiha2.front().yiha2;
-			 qiha2.pop();
-
-			 for (int dir = 0; dir < 8; ++dir) {
-				 int newRowiha2 = xiha2 + dr[dir];
-				 int newColiha2 = yiha2 + dc[dir];
-				 int fınıshrowiha2_, fınıshcoliha2_;
-				 drawGrid();
-				
-
-
-				 glutSwapBuffers();
-
-				 if (newRowiha2 >= 0 && newRowiha2 < 40 && newColiha2 >= 0 && newColiha2 < 40 && !visitedArray[newRowiha2][newColiha2]) {
-
-					 visitedArrayiha2[newRowiha2][newColiha2] = true;
-					 parent1iha2[newRowiha2][newColiha2] = { xiha2, yiha2 };
-					 qiha2.push({ newRowiha2,newColiha2 });
-					Sleep(200); //  uyku
-				 }
-
-
-				 if (newRowiha2 == fınıshrowiha2 && newColiha2 == fınıshcoliha2) {
-
-					glutSwapBuffers();
-					 shortestPathiha2.push_back({ newRowiha2, newColiha2 });
-					 int parentXiha2 = xiha2;
-					 int parentYiha2 = yiha2;
-					 shortestPathiha2.push_back({ parentXiha2, parentYiha2 });
-					 // Geriye doğru giderek en kısa yolu takip et
-					 while (parentXiha2 != startrowiha2 || parentYiha2 != startcoliha2) {
-						 int tempX = parentXiha2;
-						 parentXiha2 = parent1iha2[tempX][parentYiha2].first; // Bu satırı güncelledik
-						 parentYiha2 = parent1iha2[tempX][parentYiha2].second; // Bu satırı güncelledik
-						 shortestPathiha2.push_back({ parentXiha2, parentYiha2 });
-					 }
-					 
-					 // En kısa yolu görselleştir
-					 for (const auto& celliha2 : shortestPathiha2) {
-
-						 glColor3f(0.0, 0.0, 1.0); // Mavi renk
-						 glRectd(celliha2.first, celliha2.second, celliha2.first + 5, celliha2.second + 5);
-
-					 }
-					 //kare çizgileri belli olsun.
-					 drawGrid();
-					 glutSwapBuffers();
-					 
-					 return;
-
-				 }
-
-				 else {
-					
-					 glutSwapBuffers();
-					 glColor3f(1.0, 0.0, 0.0);
-					 glRectd(xiha2, yiha2, xiha2 + 5, yiha2 + 5);
-					
-					
-					 
-				 }
-
-
-
-			 }
-
-
-
-		 }
-
-	 }
+	 
 
 	 
 
