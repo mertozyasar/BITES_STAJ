@@ -329,59 +329,69 @@
 			}
 
 		}
-		
-		
-		glutSwapBuffers();
-		//2.İHA BAŞLANGIÇ VE BİTİŞ TEKRAR ÇİZDİR
-		glColor3f(1.0, 0.0, 0.0);
-		glRectd(fınıshrowiha2_, fınıshcoliha2_, fınıshrowiha2_ + 5, fınıshcoliha2_ + 5);
-		glColor3f(0.0, 1.0, 0.0);
-		glRectd(startrowiha2_, startcoliha2_, startrowiha2_ + 5, startcoliha2_ + 5);
-		/////////
 
-		//1.İHA BAŞLANGIÇ VE BİTİŞ TEKRAR ÇİZDİR
-		glColor3f(1.0, 0.0, 0.0);
-		glRectd(fınıshrow_, fınıshcol_, fınıshrow_ + 5, fınıshcol_ + 5);
-		glColor3f(0.0, 1.0, 0.0);
-		glRectd(startrow_, startcol_, startrow_ + 5, startcol_ + 5);
-		//////////
 
-		for (auto itiha1 = shortestPath.rbegin(); itiha1 != shortestPath.rend(); ++itiha1) {
-			const auto cell = *itiha1;
-			int xiha1_ = cell.first;
-			int yiha1_ = cell.second;
-			if (xiha1_ == 40) { xiha1_ = 35; }
-			if (yiha1_ == 40) { yiha1_ = 35; }
-			glColor3f(0.2, 0.0, 1.0);
-			glRectd(xiha1_, yiha1_, xiha1_ + 5, yiha1_ + 5);
-			//ENGEL VE KARELER BELLİ OLSUN
-			obstacle(11);
-			drawGrid();
+		auto itiha1 = shortestPath.rbegin();
+		auto itiha2 = shortestPathiha2.rbegin();
+
+		while (itiha2 != shortestPathiha2.rend() || itiha1 != shortestPath.rend()) {
+			glutSwapBuffers();
+			//2.İHA BAŞLANGIÇ VE BİTİŞ TEKRAR ÇİZDİR
+			glColor3f(1.0, 0.0, 0.0);
+			glRectd(fınıshrowiha2_, fınıshcoliha2_, fınıshrowiha2_ + 5, fınıshcoliha2_ + 5);
+			glColor3f(0.0, 1.0, 0.0);
+			glRectd(startrowiha2_, startcoliha2_, startrowiha2_ + 5, startcoliha2_ + 5);
+			/////////
+
+			//1.İHA BAŞLANGIÇ VE BİTİŞ TEKRAR ÇİZDİR
+			glColor3f(1.0, 0.0, 0.0);
+			glRectd(fınıshrow_, fınıshcol_, fınıshrow_ + 5, fınıshcol_ + 5);
+			glColor3f(0.0, 1.0, 0.0);
+			glRectd(startrow_, startcol_, startrow_ + 5, startcol_ + 5);
 			//////////
 			glutSwapBuffers();
-			Sleep(1000);
-			glutSwapBuffers();
-		}
-		
-		
-		for (auto itiha2 = shortestPathiha2.rbegin(); itiha2 != shortestPathiha2.rend(); ++itiha2) {
-			const auto celliha2 = *itiha2;
-			int xiha2_ = celliha2.first;
-			int yiha2_ = celliha2.second;
-			if (xiha2_ == 40) { xiha2_ = 35; }
-			if (yiha2_ == 40) { yiha2_ = 35; }
-			glColor3f(0.8, 0.0, 1.0);
-			glRectd(xiha2_, yiha2_, xiha2_ + 5, yiha2_ + 5);
+			
+			if (itiha1 != shortestPath.rend()) {
 
-			//ENGEL VE KARELER BELLİ OLSUN
-			obstacle(11);
-			drawGrid();
-			/////////
-			glutSwapBuffers();
+				const auto cell = *itiha1;
+				glutSwapBuffers();
+				int xiha1_ = cell.first;
+				int yiha1_ = cell.second;
+				if (xiha1_ == 40) { xiha1_ = 35; }
+				if (yiha1_ == 40) { yiha1_ = 35; }
+				glColor3f(0.2, 0.0, 1.0);
+				glRectd(xiha1_, yiha1_, xiha1_ + 5, yiha1_ + 5);
+				++itiha1;
+
+				obstacle(11);
+				drawGrid();
+				glutSwapBuffers();
+			}
+
+			if (itiha2 != shortestPathiha2.rend()) {
+				glutSwapBuffers();
+				const auto celliha2 = *itiha2;
+				int xiha2_ = celliha2.first;
+				int yiha2_ = celliha2.second;
+				if (xiha2_ == 40) { xiha2_ = 35; }
+				if (yiha2_ == 40) { yiha2_ = 35; }
+				glColor3f(0.8, 0.0, 1.0);
+				glRectd(xiha2_, yiha2_, xiha2_ + 5, yiha2_ + 5);
+				++itiha2;
+				
+				obstacle(11);
+				drawGrid();
+				glutSwapBuffers();
+			}
+
 			Sleep(1000);
 			glutSwapBuffers();
+			glColor3f(1.0, 0.0, 0.0);
+			glRectd(fınıshrow_, fınıshcol_, fınıshrow_ + 5, fınıshcol_ + 5);
+			glutSwapBuffers();
+
 		}
-		glutSwapBuffers();
+
 
 		
 	 }
